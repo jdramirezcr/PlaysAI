@@ -1,0 +1,24 @@
+<%- include('partials/header', { title: 'Tic Tac Toe', extraCss: 'tictactoe.css', backLink: true }) %>
+
+  <h1>✖ Tic Tac Toe ⭕</h1>
+
+  <div class="mode-select">
+    <button class="mode-btn active" onclick="setMode('pvp')">2 Jugadores</button>
+    <button class="mode-btn" onclick="setMode('cpu')">vs CPU</button>
+  </div>
+
+  <div class="status" id="status">Turno de X</div>
+
+  <div class="board" id="board"></div>
+
+  <button class="btn" onclick="newGame()">Nueva Partida</button>
+
+  <div class="score">
+    <span><span class="lbl-x">X</span><strong id="scoreX">0</strong></span>
+    <span><span style="color:#888">Empates</span><strong id="scoreDraw">0</strong></span>
+    <span><span class="lbl-o">O</span><strong id="scoreO">0</strong></span>
+  </div>
+
+  <script src="/js/tictactoe.js"></script>
+
+<%- include('partials/footer') %>

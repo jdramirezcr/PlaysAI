@@ -1,0 +1,49 @@
+<%- include('partials/header', { title: 'Busca Minas', extraCss: 'minesweeper.css', backLink: true }) %>
+
+  <h1>💣 Busca Minas</h1>
+  <p class="subtitle">Clic para revelar &bull; Clic derecho para bandera</p>
+
+  <div class="controls">
+    <label>Dificultad:</label>
+    <select id="difficulty" onchange="newGame()">
+      <option value="3x3x2">Fácil (3×3, 2 minas)</option>
+      <option value="5x5x4">Medio (5×5, 4 minas)</option>
+      <option value="8x8x10">Difícil (8×8, 10 minas)</option>
+    </select>
+  </div>
+
+  <div class="status" id="status"></div>
+  <div class="board" id="board"></div>
+  <button class="btn" onclick="newGame()">Nueva Partida</button>
+  <p class="info">Banderas: <span id="flags">0</span> / <span id="totalMines">0</span></p>
+
+  <div class="leaderboard">
+    <h2>🏆 Mejores Puntajes</h2>
+    <div class="leaderboard-tabs">
+      <button class="active" onclick="switchTab('easy')">Fácil</button>
+      <button onclick="switchTab('medium')">Medio</button>
+      <button onclick="switchTab('hard')">Difícil</button>
+    </div>
+    <table>
+      <thead>
+        <tr><th>#</th><th>Jugador</th><th>Clicks</th></tr>
+      </thead>
+      <tbody id="leaderboard-body">
+        <% if (scores && scores.length > 0) { %>
+          <% scores.forEach((s, i) => { %>
+            <tr>
+              <td><%= i + 1 %></td>
+              <td><%= s.player_name %></td>
+              <td><%= s.click_count %></td>
+            </tr>
+          <% }) %>
+        <% } else { %>
+          <tr><td colspan="3" class="empty">Sin puntajes aún</td></tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+
+  <script src="/js/minesweeper.js"></script>
+
+<%- include('partials/footer') %>

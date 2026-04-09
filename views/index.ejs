@@ -1,0 +1,38 @@
+<%- include('partials/header', { title: 'PlaysAI', backLink: false }) %>
+
+<style>
+  .hub { display: flex; gap: 24px; margin-top: 32px; }
+  .game-card {
+    background: #16213e;
+    border: 1px solid #e94560;
+    border-radius: 16px;
+    padding: 40px 32px;
+    text-align: center;
+    text-decoration: none;
+    color: #eee;
+    transition: transform 0.2s, box-shadow 0.2s;
+    min-width: 180px;
+  }
+  .game-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 32px rgba(233,69,96,0.3);
+  }
+  .game-card .icon { font-size: 3rem; display: block; margin-bottom: 12px; }
+  .game-card .name { font-size: 1rem; letter-spacing: 1px; color: #e94560; }
+</style>
+
+<h1>PlaysAI</h1>
+<p style="color:#666; margin-bottom:8px; font-size:0.85rem">Elige un juego</p>
+
+<div class="hub">
+  <a class="game-card" href="/minesweeper">
+    <span class="icon">💣</span>
+    <span class="name">Busca Minas</span>
+  </a>
+  <a class="game-card" href="/tictactoe">
+    <span class="icon">✖⭕</span>
+    <span class="name">Tic Tac Toe</span>
+  </a>
+</div>
+
+<%- include('partials/footer') %>
