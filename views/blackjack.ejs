@@ -1,0 +1,111 @@
+<%- include('partials/header', { title: 'Blackjack', extraCss: 'blackjack.css', backLink: true }) %>
+
+<!-- Header -->
+<div id="header">
+  <div class="sub">ENTRENADOR DE</div>
+  <h1>BLACKJACK</h1>
+  <div id="stats-row">
+    <span>MANOS <span id="stat-hands">0</span></span>
+    <span>CORRECTAS <span class="correct" id="stat-correct">0</span></span>
+    <span>PRECISIÓN <span id="stat-accuracy">0%</span></span>
+  </div>
+</div>
+
+<!-- Balance panel -->
+<div id="balance-panel">
+  <div id="balance-row">
+    <div>
+      <div class="bal-label">SALDO</div>
+      <div id="balance-val">200€</div>
+    </div>
+    <div style="text-align:center">
+      <div class="bal-label">GANANCIA/PÉRDIDA</div>
+      <div id="profit-val">+0€</div>
+      <div id="roi-val">ROI 0.0%</div>
+    </div>
+    <div style="text-align:right">
+      <div class="bal-label">ÚLTIMA MANO</div>
+      <div id="last-hand-val" style="color:#888">—</div>
+      <div id="wagered-val">apostado 0€</div>
+    </div>
+  </div>
+
+  <div id="balance-bar-wrap">
+    <div id="balance-bar" style="width:100%"></div>
+  </div>
+  <div id="balance-bar-labels">
+    <span>0€</span><span>INICIO 200€</span>
+  </div>
+
+  <button id="history-btn" style="display:none">▼ VER HISTORIAL</button>
+  <div id="history-list" style="display:none"></div>
+</div>
+
+<!-- 21+3 Side Bet Panel -->
+<div id="side-panel">
+  <div id="side-header-row">
+    <span id="side-title">21+3 SIDE BETS</span>
+    <button id="paytable-btn">PREMIOS</button>
+  </div>
+
+  <div class="side-tier-row">
+    <div class="side-tier-info">
+      <span class="tier-label">€5 JACKPOT</span>
+      <span class="tier-jackpot">Jackpot: €52,847.50</span>
+    </div>
+    <button id="side5-toggle" class="side-toggle-btn">OFF</button>
+  </div>
+
+  <div class="side-tier-row">
+    <div class="side-tier-info">
+      <span class="tier-label">€1 JACKPOT</span>
+      <span class="tier-jackpot">Jackpot: €5,107.46</span>
+    </div>
+    <button id="side1-toggle" class="side-toggle-btn">OFF</button>
+  </div>
+
+  <div id="paytable-wrap" style="display:none"></div>
+  <div id="side-result-wrap" style="display:none"></div>
+</div>
+
+<!-- Table -->
+<div id="table">
+  <div id="bet-row">
+    <div id="bet-label">10€</div>
+    <div id="split-indicator"></div>
+  </div>
+
+  <!-- Dealer -->
+  <div id="dealer-section">
+    <div id="dealer-label" class="section-label">DEALER</div>
+    <div id="dealer-cards" class="cards-row"></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Player -->
+  <div id="player-section"></div>
+
+  <!-- Strategy feedback -->
+  <div id="feedback-badge"></div>
+
+  <!-- Actions / Result -->
+  <div id="action-area"></div>
+</div>
+
+<!-- Quick reference -->
+<div id="quick-ref">
+  <div class="section-label">REFERENCIA RÁPIDA</div>
+  <ul>
+    <li><span class="ref-purple">A,A o 8,8</span> → siempre divide</li>
+    <li><span class="ref-purple">10,10</span> → nunca dividas, plántate</li>
+    <li><span class="ref-yellow">9–11 pts + dealer débil</span> → dobla</li>
+    <li><span class="ref-green">12–16 + dealer 2–6</span> → plántate</li>
+    <li><span class="ref-red">12–16 + dealer 7–A</span> → pide</li>
+    <li><span class="ref-green">≥17 pts</span> → siempre plántate</li>
+  </ul>
+</div>
+
+<script src="/js/blackjack.js"></script>
+
+<%- include('partials/footer') %>

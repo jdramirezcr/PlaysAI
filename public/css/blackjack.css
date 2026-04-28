@@ -1,0 +1,197 @@
+@keyframes cardDeal {
+  from { opacity: 0; transform: translateY(-16px) rotate(-4deg); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+@keyframes pop   { 0%{transform:scale(1)} 50%{transform:scale(1.18)} 100%{transform:scale(1)} }
+@keyframes glow  { 0%,100%{box-shadow:0 0 10px rgba(244,208,63,0.4)} 50%{box-shadow:0 0 24px rgba(244,208,63,0.9)} }
+
+* { box-sizing: border-box; }
+
+body {
+  min-height: 100vh;
+  background: #0a1628;
+  background-image: radial-gradient(ellipse at 50% 0%, rgba(15,52,96,0.6) 0%, transparent 60%);
+  font-family: 'Georgia', serif;
+  color: #f0e6d3;
+  padding: 16px 14px;
+  margin: 0;
+}
+
+.mono { font-family: 'Courier New', monospace; }
+
+/* ── Header ── */
+#header { text-align: center; margin-bottom: 13px; }
+#header .sub { font-size: 10px; letter-spacing: 6px; color: #e94560; font-family: 'Courier New', monospace; margin-bottom: 2px; }
+#header h1  { font-size: 27px; font-weight: normal; margin: 0; letter-spacing: 3px; color: #f0e6d3; text-shadow: 0 0 30px rgba(233,69,96,0.4); }
+#stats-row  { display: flex; justify-content: center; gap: 16px; margin-top: 7px; font-family: 'Courier New', monospace; font-size: 10px; color: #888; }
+#stats-row span span { color: #f0e6d3; }
+#stats-row .correct  { color: #2ed573; }
+
+/* ── Balance panel ── */
+#balance-panel {
+  max-width: 400px; margin: 0 auto 11px;
+  background: rgba(0,0,0,0.4); border-radius: 14px;
+  padding: 12px 15px; border: 1px solid rgba(255,255,255,0.1);
+}
+#balance-row { display: flex; justify-content: space-between; align-items: center; }
+.bal-label { font-size: 9px; letter-spacing: 3px; color: #7fba9e; font-family: 'Courier New', monospace; margin-bottom: 3px; }
+#balance-val { font-size: 26px; font-weight: bold; font-family: 'Courier New', monospace; }
+#profit-val  { font-size: 20px; font-weight: bold; font-family: 'Courier New', monospace; }
+#roi-val     { font-size: 10px; color: #666; font-family: 'Courier New', monospace; }
+#last-hand-val { font-size: 18px; font-weight: bold; font-family: 'Courier New', monospace; }
+#wagered-val   { font-size: 10px; color: #555; font-family: 'Courier New', monospace; }
+
+#balance-bar-wrap { margin-top: 10px; height: 4px; background: rgba(255,255,255,0.08); border-radius: 4px; overflow: hidden; }
+#balance-bar      { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+#balance-bar-labels { display: flex; justify-content: space-between; margin-top: 3px; font-size: 9px; color: #444; font-family: 'Courier New', monospace; }
+
+#history-btn {
+  margin-top: 9px; width: 100%; padding: 5px 0;
+  font-size: 10px; background: transparent;
+  border: 1px solid rgba(255,255,255,0.1); color: #7fba9e;
+  letter-spacing: 2px; cursor: pointer; border-radius: 10px;
+  font-family: 'Courier New', monospace; font-weight: bold;
+  transition: all 0.18s;
+}
+#history-btn:hover { filter: brightness(1.2); }
+#history-list { margin-top: 8px; max-height: 190px; overflow-y: auto; }
+.hrow { display: flex; justify-content: space-between; align-items: center; padding: 5px 6px; border-radius: 6px; font-size: 11px; font-family: 'Courier New', monospace; }
+.hrow:nth-child(odd) { background: rgba(255,255,255,0.03); }
+
+/* ── 21+3 panel ── */
+#side-panel {
+  max-width: 400px; margin: 0 auto 11px;
+  border-radius: 14px; padding: 12px 15px; transition: all 0.3s;
+}
+#side-header-row {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 10px;
+}
+#side-title { font-size: 11px; font-family: 'Courier New', monospace; font-weight: bold; letter-spacing: 2px; color: #7fba9e; }
+#paytable-btn {
+  padding: 4px 10px; font-size: 10px; background: transparent;
+  border: 1px solid rgba(255,255,255,0.15); color: #888;
+  letter-spacing: 1px; cursor: pointer; border-radius: 10px;
+  font-family: 'Courier New', monospace; font-weight: bold; transition: all 0.18s;
+}
+#paytable-btn:hover { filter: brightness(1.2); }
+.side-tier-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 7px 0; border-top: 1px solid rgba(255,255,255,0.05);
+}
+.side-tier-info { display: flex; flex-direction: column; gap: 2px; }
+.tier-label   { font-size: 11px; font-family: 'Courier New', monospace; font-weight: bold; color: #f0e6d3; letter-spacing: 1px; }
+.tier-jackpot { font-size: 10px; font-family: 'Courier New', monospace; color: #666; }
+.side-toggle-btn {
+  padding: 6px 14px; font-size: 11px; cursor: pointer; border-radius: 10px;
+  font-family: 'Courier New', monospace; font-weight: bold; transition: all 0.18s;
+}
+.side-toggle-btn:hover { filter: brightness(1.15); transform: translateY(-1px); }
+#paytable-wrap { margin-top: 10px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 10px; }
+.pt-row { display: flex; justify-content: space-between; padding: 3px 0; font-size: 11px; font-family: 'Courier New', monospace; }
+.pt-row:not(:last-child) { border-bottom: 1px solid rgba(255,255,255,0.04); }
+.pt-pay { color: #f4d03f; font-weight: bold; min-width: 70px; text-align: right; }
+
+/* ── Table ── */
+#table {
+  max-width: 400px; margin: 0 auto;
+  background: linear-gradient(180deg, #0d3b2e, #0a2e22);
+  border-radius: 20px; padding: 18px 16px;
+  border: 2px solid #1a5c42;
+  box-shadow: 0 0 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05);
+}
+#bet-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 13px; font-family: 'Courier New', monospace; font-size: 13px; color: #f4d03f; font-weight: bold; }
+#bet-doubled { font-size: 10px; color: #f4a03f; }
+#bet-side    { font-size: 10px; color: #f4d03f; margin-left: 6px; }
+#split-indicator { font-family: 'Courier New', monospace; font-size: 10px; color: #a29bfe; }
+
+.section-label { font-size: 9px; letter-spacing: 4px; color: #7fba9e; font-family: 'Courier New', monospace; margin-bottom: 7px; }
+#dealer-section  { margin-bottom: 13px; }
+.divider         { border-top: 1px solid rgba(255,255,255,0.08); margin-bottom: 13px; }
+#player-section  { margin-bottom: 13px; }
+
+.cards-row { display: flex; gap: 6px; flex-wrap: wrap; }
+.cards-row.small { gap: 5px; }
+
+/* ── Cards ── */
+.card {
+  border-radius: 8px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: space-between;
+  padding: 4px 3px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  font-weight: bold;
+  animation: cardDeal 0.3s ease-out;
+  flex-shrink: 0;
+}
+.card.normal { width: 64px; height: 92px; }
+.card.small  { width: 48px; height: 68px; }
+.card.face-up { background: linear-gradient(145deg,#fff,#f0f0f0); border: 2px solid #ddd; }
+.card.active  { background: linear-gradient(145deg,#fffef0,#fff9d0); border: 2px solid #f4d03f; box-shadow: 0 0 10px rgba(244,208,63,0.4), 0 4px 12px rgba(0,0,0,0.3); }
+.card.hidden  { background: linear-gradient(135deg,#1a1a2e,#16213e,#0f3460); border: 2px solid #e94560; box-shadow: 0 4px 15px rgba(233,69,96,0.3); align-items: center; justify-content: center; color: #e94560; font-size: 20px; }
+.card.red  { color: #c0392b; }
+.card.black{ color: #1a1a2e; }
+.card-corner     { font-size: 11px; align-self: flex-start; line-height: 1; }
+.card-corner.bot { align-self: flex-end; transform: rotate(180deg); }
+.card-suit-center{ font-size: 19px; }
+.card.small .card-corner      { font-size: 9px; }
+.card.small .card-suit-center { font-size: 15px; }
+
+/* ── Feedback badge ── */
+#feedback-badge { text-align: center; margin-bottom: 10px; }
+.badge {
+  padding: 4px 12px; border-radius: 20px;
+  font-family: 'Courier New', monospace; font-size: 11px; font-weight: bold;
+  display: inline-flex; align-items: center; gap: 5px;
+}
+.badge.correct   { background: rgba(46,213,115,0.15); border: 1px solid #2ed573; color: #2ed573; }
+.badge.incorrect { background: rgba(233,69,96,0.15);  border: 1px solid #e94560; color: #e94560; }
+
+/* ── Action buttons ── */
+#action-area { display: flex; flex-direction: column; gap: 7px; }
+.btn-row  { display: flex; gap: 7px; }
+.abtn {
+  cursor: pointer; transition: all 0.18s; border: none;
+  font-family: 'Courier New', monospace; font-weight: bold;
+  letter-spacing: 1px; border-radius: 10px;
+  flex: 1; padding: 11px 0; font-size: 13px; color: white;
+}
+.abtn:hover  { transform: translateY(-2px); filter: brightness(1.15); }
+.abtn:active { transform: none; }
+.abtn.hit    { background: linear-gradient(135deg,#e94560,#c0392b); }
+.abtn.stand  { background: linear-gradient(135deg,#2ed573,#27ae60); }
+.abtn.double { background: linear-gradient(135deg,#f4d03f,#d4ac0d); color: #1a1a2e; padding: 9px 0; font-size: 12px; }
+.abtn.split  { background: linear-gradient(135deg,#a29bfe,#6c5ce7); padding: 9px 0; font-size: 12px; }
+.abtn.new-hand { background: linear-gradient(135deg,#0f3460,#16213e); border: 1px solid #e94560; color: #e94560; letter-spacing: 2px; width: 100%; }
+.abtn.reset    { background: linear-gradient(135deg,#e94560,#c0392b); letter-spacing: 2px; width: 100%; padding: 11px 0; font-size: 12px; }
+#action-hint { font-size: 10px; color: rgba(127,186,158,0.45); font-family: 'Courier New', monospace; text-align: center; min-height: 13px; }
+
+/* ── Result ── */
+#result-area {}
+#result-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+#result-label  { font-size: 15px; font-weight: bold; color: #f0e6d3; }
+#result-delta  { font-family: 'Courier New', monospace; font-size: 16px; font-weight: bold; }
+.result-hand-row { margin-bottom: 12px; }
+.result-hand-meta { font-size: 9px; letter-spacing: 3px; color: #7fba9e; font-family: 'Courier New', monospace; margin-bottom: 6px; display: flex; justify-content: space-between; }
+.result-hand-outcome { font-weight: bold; }
+#bust-msg { text-align: center; }
+#bust-msg p { color: #e94560; font-family: 'Courier New', monospace; font-size: 13px; margin-bottom: 10px; }
+
+/* ── Inactive split hand ── */
+.split-done-hand { margin-top: 10px; opacity: 0.5; }
+.split-done-label { font-size: 9px; letter-spacing: 2px; color: #7fba9e; font-family: 'Courier New', monospace; margin-bottom: 5px; }
+
+/* ── Quick reference ── */
+#quick-ref {
+  max-width: 400px; margin: 12px auto 20px;
+  background: rgba(255,255,255,0.03); border-radius: 14px;
+  padding: 11px 15px; border: 1px solid rgba(255,255,255,0.07);
+}
+#quick-ref .section-label { margin-bottom: 7px; }
+#quick-ref ul { font-size: 11px; line-height: 1.9; color: #8aabb0; font-family: 'Courier New', monospace; list-style: none; padding: 0; margin: 0; }
+#quick-ref li span { }
+.ref-purple { color: #a29bfe; }
+.ref-yellow { color: #f4d03f; }
+.ref-green  { color: #2ed573; }
+.ref-red    { color: #e94560; }
